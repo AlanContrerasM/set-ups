@@ -1,0 +1,51 @@
+create on github
+
+git clone githublink/webpack-demo
+
+
+cd webpack-demo
+npm init -y
+npm install webpack webpack-cli --save-dev
+npm install --save-dev style-loader css-loader
+npm install -D babel-loader @babel/core @babel/preset-env webpack
+//if eslint is installed globally, which it is in this computer. otherwise
+eslint --init 
+npm install --save-dev eslint-config-prettier
+add the folowing to the extends object in .eslintrc.*
+{
+  "extends": [
+    "some-other-config-you-use",
+    "prettier"
+  ]
+}
+
+
+in package.json delete 
+  "main": "index.js",
+and add
+  "private": true,
+This is so we don't accidentally publish it.
+
+
+
+cd ..
+cp -a initfiles/. webpack-demo/
+cd webpack-demo
+
+
+*we install lodash, this is optional, but delete import line in index.js
+npm install --save lodash
+
+
+inside package.json we can include npm scripts inside "scripts"
+For example:
+"build": "webpack --progress --mode=production",
+"watch": "webpack --progress --watch --mode=production",
+"watchdev": "webpack --progress --watch --mode=development" 
+now we can run webpack and create the bundle with 
+npm run build
+
+ctrl + shit + p  >Format Document to pretify it
+
+to upload to github pages and so it can load from dist folder
+git subtree push --prefix dist origin gh-pages

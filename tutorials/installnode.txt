@@ -1,0 +1,27 @@
+install everything from the first chapters of the oding project, 
+linux, git, vscode, etc.
+
+followup with node, jasmine
+
+https://www.theodinproject.com/courses/foundations/lessons/fundamentals-part-4
+
+https://github.com/TheOdinProject/curriculum/blob/master/foundations/installations/installing_node.md#step-22-setting-the-node-version
+
+
+we can also install jasmine
+Jasmine. Jasmine is a testing framework for JavaScript. 
+Type jasmine -v to check for it. If you need to install it, type npm install -g jasmine to do so.
+
+
+install npm, webpack, etc.
+https://www.theodinproject.com/courses/javascript/lessons/es6-modules
+
+https://docs.npmjs.com/creating-a-package-json-file
+npm set init.author.email "alanrcontrerasm@gmail.com"
+npm set init.author.name "Alan_Contreras"
+
+
+
+//install linting stuff, eslint, prettier
+https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/linting
+npm install -g eslint

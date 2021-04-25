@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>The best page ever</title>
+
+		
+		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+		<style>
+			/*every document has a body */
+
+			/*hex is 0-F, 6 values, 2 for Red, 2 for Green, 2 for Blue
+			RGB
+			You can also only use 3 values, RGB #F00 for red, etc.
+			rgb is the same, 0-255 grb(255,0,0) for red
+			rgba, a is level of opacity 0-1, 0 is transparent
+			hsl is hue saturation lightness, useful for when trying to find shades of a color*/
+
+		  .red-text {
+		    color: #FF0000;
+		    color: #F00;
+		    color: rgb(255,0,0);
+		    color: rgba(255,0,0,0.7);
+		    color: hsl(180, 80%, 25%);
+		  }
+		  .green-text {
+		    color: #00FF00;
+		  }
+		  .dodger-blue-text {
+		    color: #1E90FF;
+		  }
+		  .orange-text {
+		    color: #FFA500;
+		  }
+		  .fuchsia-text {
+		    color: #F0F;
+		  }
+		  .cyan-text {
+		    color: #0FF;
+		  }
+		  /* fallback*/
+		  h2 {
+		    font-family: Lobster, monospace;
+		  }
+
+		  p {
+		    font-size: 16px;
+		    font-family: monospace;
+		    color: blue;
+		  }
+
+		  #cat-form{
+			background-color: silver;
+		  }
+		  [type="checkbox"]{
+		    margin-top: 15px;
+		    margin-bottom: 15px;
+		  }
+		  /* we can use em rem mm in, relative, absolute values instead of px*/
+
+		  .thick-green-border {
+		    border-color: green;
+		    border-width: 10px;
+		    border-style: solid;
+		    border-radius: 50%;
+		  }
+
+		  .smaller-image {
+		    width: 100px;
+		  }
+
+		  .silver-background {
+		    background-color: silver;
+		  }
+		  #orange-text {
+		    color: orange;
+		  }
+		  /*overrides everything*/
+		  .pink-text {
+		    color: pink !important;
+		  }
+		  .blue-text {
+		    color: blue;
+		  }
+
+
+		  /* variables,  you define them inside :root or a parent class, and just invoke them with var(--color-red);
+		  You can write a fallback var(--color-red, red)
+		  variables not supported in internet explorer, good practice to put a fallback before
+		  variables can de reassigned down the inheritance, ex. penguin belly*/
+		  :root {
+		    --penguin-size: 300px;
+		    --penguin-skin: gray;
+		    --penguin-belly: white;
+		    --penguin-beak: orange;
+		  }
+
+		  @media (max-width: 350px) {
+		    :root {
+		      /* Only change code below this line */
+		      --penguin-size: 200px;
+		      --penguin-skin: black;
+		      /* Only change code above this line */
+		    }
+		  }
+
+		  .penguin {
+		    position: relative;
+		    margin: auto;
+		    display: block;
+		    margin-top: 5%;
+		    width: var(--penguin-size, 300px);
+		    height: var(--penguin-size, 300px);
+		  }
+
+		  .right-cheek {
+		    top: 15%;
+		    left: 35%;
+		    background: var(--penguin-belly, white);
+		    width: 60%;
+		    height: 70%;
+		    border-radius: 70% 70% 60% 60%;
+		  }
+
+		  .left-cheek {
+		    top: 15%;
+		    left: 5%;
+		    background: var(--penguin-belly, white);
+		    width: 60%;
+		    height: 70%;
+		    border-radius: 70% 70% 60% 60%;
+		  }
+
+		  .belly {
+		    top: 60%;
+		    left: 2.5%;
+		    background: var(--penguin-belly, white);
+		    width: 95%;
+		    height: 100%;
+		    border-radius: 120% 120% 100% 100%;
+		  }
+
+		  .penguin-top {
+		    top: 10%;
+		    left: 25%;
+		    background: var(--penguin-skin, gray);
+		    width: 50%;
+		    height: 45%;
+		    border-radius: 70% 70% 60% 60%;
+		  }
+
+		  .penguin-bottom {
+		    top: 40%;
+		    left: 23.5%;
+		    background: var(--penguin-skin, gray);
+		    width: 53%;
+		    height: 45%;
+		    border-radius: 70% 70% 100% 100%;
+		  }
+
+		  .right-hand {
+		    top: 5%;
+		    left: 25%;
+		    background: var(--penguin-skin, black);
+		    width: 30%;
+		    height: 60%;
+		    border-radius: 30% 30% 120% 30%;
+		    transform: rotate(130deg);
+		    z-index: -1;
+		    animation-duration: 3s;
+		    animation-name: wave;
+		    animation-iteration-count: infinite;
+		    transform-origin:0% 0%;
+		    animation-timing-function: linear;
+		  }
+
+		  @keyframes wave {
+		      10% {
+		        transform: rotate(110deg);
+		      }
+		      20% {
+		        transform: rotate(130deg);
+		      }
+		      30% {
+		        transform: rotate(110deg);
+		      }
+		      40% {
+		        transform: rotate(130deg);
+		      }
+		    }
+
+		  .left-hand {
+		    top: 0%;
+		    left: 75%;
+		    background: var(--penguin-skin, gray);
+		    width: 30%;
+		    height: 60%;
+		    border-radius: 30% 30% 30% 120%;
+		    transform: rotate(-45deg);
+		    z-index: -1;
+		  }
+
+		  .right-feet {
+		    top: 85%;
+		    left: 60%;
+		    background: var(--penguin-beak, orange);
+		    width: 15%;
+		    height: 30%;
+		    border-radius: 50% 50% 50% 50%;
+		    transform: rotate(-80deg);
+		    z-index: -2222;
+		  }
+
+		  .left-feet {
+		    top: 85%;
+		    left: 25%;
+		    background: var(--penguin-beak, orange);
+		    width: 15%;
+		    height: 30%;
+		    border-radius: 50% 50% 50% 50%;
+		    transform: rotate(80deg);
+		    z-index: -2222;
+		  }
+
+		  .right-eye {
+		    top: 45%;
+		    left: 60%;
+		    background: black;
+		    width: 15%;
+		    height: 17%;
+		    border-radius: 50%;
+		  }
+
+		  .left-eye {
+		    top: 45%;
+		    left: 25%;
+		    background: black;
+		    width: 15%;
+		    height: 17%;
+		    border-radius: 50%;
+		  }
+
+		  .sparkle {
+		    top: 25%;
+		    left:-23%;
+		    background: white;
+		    width: 150%;
+		    height: 100%;
+		    border-radius: 50%;
+		  }
+
+		  .blush-right {
+		    top: 65%;
+		    left: 15%;
+		    background: pink;
+		    width: 15%;
+		    height: 10%;
+		    border-radius: 50%;
+		  }
+
+		  .blush-left {
+		    top: 65%;
+		    left: 70%;
+		    background: pink;
+		    width: 15%;
+		    height: 10%;
+		    border-radius: 50%;
+		  }
+
+		  .beak-top {
+		    top: 60%;
+		    left: 40%;
+		    background: var(--penguin-beak, orange);
+		    width: 20%;
+		    height: 10%;
+		    border-radius: 50%;
+		  }
+
+		  .beak-bottom {
+		    top: 65%;
+		    left: 42%;
+		    background: var(--penguin-beak, orange);
+		    width: 16%;
+		    height: 10%;
+		    border-radius: 50%;
+		  }
+
+		  body {
+		    background:#c6faf1;
+		  }
+
+		  .penguin * {
+		    position: absolute;
+		  }
+		</style>
+		
+	</head>
+
+<!-- HTML basics
+	This is a comment
+ -->
+
+ <!-- a nice way to set a background
+ 	#back {
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(black, #000099, #66c2ff, #ffcccc, #ffeee6);
+  }
+-->
+	<body>
+		<div class="penguin">
+		  <div class="penguin-bottom">
+		    <div class="right-hand"></div>
+		    <div class="left-hand"></div>
+		    <div class="right-feet"></div>
+		    <div class="left-feet"></div>
+		  </div>
+		  <div class="penguin-top">
+		    <div class="right-cheek"></div>
+		    <div class="left-cheek"></div>
+		    <div class="belly"></div>
+		    <div class="right-eye">
+		      <div class="sparkle"></div>
+		    </div>
+		    <div class="left-eye">
+		      <div class="sparkle"></div>
+		    </div>
+		    <div class="blush-right"></div>
+		    <div class="blush-left"></div>
+		    <div class="beak-top"></div>
+		    <div class="beak-bottom"></div>
+		  </div>
+		</div>
+		<h2>CatPhotoApp</h2>
+		<main>
+		  <p>Click here to view more <a href="#">cat photos</a>.</p>
+
+		  <!-- # its a place holder for url-->
+
+		  <a href="#"><img class="thick-green-border" src="https://bit.ly/fcc-relaxing-cat" alt="A cute orange cat lying on its back."></a>
+
+		  <!-- anchor to an id section-->
+		  <a href="#contacts-header">Contacts</a>
+
+		  
+		  <div>
+			  <p class="pink-text orange-text">Things cats love:</p>
+			  <ul>
+			    <li>cat nip</li>
+			    <li>laser pointers</li>
+			    <li>lasagna</li>
+			  </ul>
+			  <p>Top 3 things cats hate:</p>
+			  <ol>
+			    <li>flea treatment</li>
+			    <li>thunder</li>
+			    <li>other cats</li>
+			  </ol>
+			</div>
+
+		  <form action="https://freecatphotoapp.com/submit-cat-photo">
+		    <!-- radio -->
+		    <label for="indoor"><input id="indoor" type="radio" name="indoor-outdoor" value="indoor" checked> Indoor</label>
+		    <label for="outdoor"><input id="outdoor" type="radio" name="indoor-outdoor" value="outdoor"> Outdoor</label><br>
+		    
+		    <!-- checkboxes-->
+		    <label for="loving"><input id="loving" type="checkbox" name="personality" value="loving" checked> Loving</label>
+		    <label for="lazy"><input id="lazy" type="checkbox" name="personality" value="lazy"> Lazy</label>
+		    <label for="energetic"><input id="energetic" type="checkbox" name="personality" value="energetic"> Energetic</label><br>
+		    <input type="text" placeholder="cat photo URL" required>
+		    <button type="submit">Submit</button>
+		  </form>
+
+		  <h2 id="contacts-header">Contacts</h2>
+
+		  <!-- if more than 2 conflicting classes, the order declared on the html doesnt matter, 
+		  	the last class written on the stylesheets will be taken,
+		  	after that id has preference, and the most specific is inline style, i.e. white here.
+		  	the most powerful is !important on stylesheets, i.e. pink color: pink !important;-->
+		  <h1 style="color: white;" id="orange-text" class="pink-text blue-text">Hello World!</h1>
+
+		</main>
+	</body>
+</html>
+
+
+<!--paddings-->
+<style>
+  .injected-text {
+    margin-bottom: -25px;
+    text-align: center;
+  }
+
+  .box {
+    border-style: solid;
+    border-color: black;
+    border-width: 5px;
+    text-align: center;
+  }
+
+  .yellow-box {
+    background-color: yellow;
+    padding: 20px 40px 20px 40px;
+    /*top right bottom left*/
+    margin-top:10px;
+    margin-left: 5px;
+    margin-bottom: 2px;
+    margin-right: 5px;
+  }
+
+  .red-box {
+    background-color: crimson;
+    color: #fff;
+    margin: 20px 40px 20px 40px;
+  }
+
+  .blue-box {
+    background-color: blue;
+    color: #fff;
+  }
+</style>
+<h5 class="injected-text">margin</h5>
+
+<div class="box yellow-box">
+  <h5 class="box red-box">padding</h5>
+  <h5 class="box blue-box">padding</h5>
+</div>
+
+
+
+<style>
+	/*Can be justify, left, right, center*/
+  h4 {
+    text-align: center;
+    /* height */
+    height: 25px;
+    background-color: rgba(45,45,45,0.1);
+    font-size: 24px;
+    text-transform: uppercase;
+    /*can be uppercase, lowercase, capitalize, initial, inherit, none*/
+    font-weight: 800;
+    /*to set boldness*/
+  }
+  p {
+    text-align: justify;
+    /*
+    font-style:; we could use strong, underline, italic instead of <strong><u><em>
+    text-decoration: line-through; instead of <s>
+    */
+    line-height: 16px;
+    /*line height, interlineado*/
+  }
+  .links {
+    margin-right: 20px;
+    opacity: 0.7;
+
+  }
+  .fullCard {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 5px;
+    padding: 4px;
+    /*width to set max size*/
+    width: 245px;
+  }
+  .cardContent {
+    padding: 10px;
+  }
+  #thumbnail {
+  	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  	/*
+  	The box-shadow property takes values for
+
+offset-x (how far to push the shadow horizontally from the element),
+offset-y (how far to push the shadow vertically from the element),
+blur-radius,
+spread-radius and
+color, in that order.
+The blur-radius and spread-radius values are optional.
+
+Multiple box-shadows can be created by using commas to separate properties of each box-shadow element.
+*/
+  	
+  }
+  a:hover {
+  	color: red;
+  }
+
+</style>
+
+<h4>Text aligns </h4>
+<hr>
+<!-- hr to put an horizontal line, looks good -->
+<div class="fullCard" id="thumbnail">
+  <div class="cardContent">
+    <div class="cardText">
+      <h4><s>Google</s>Alphabet</h4>
+      <!-- strong tag for bold, u for underline-->
+      <p><em>Google was founded by Larry Page and Sergey Brin while they were <u>Ph.D. students</u> at <strong>Stanford University</strong>.</em></p>
+    </div>
+    <div class="cardLinks">
+      <a href="https://en.wikipedia.org/wiki/Larry_Page" target="_blank" class="links">Larry Page</a>
+      <a href="https://en.wikipedia.org/wiki/Sergey_Brin" target="_blank" class="links">Sergey Brin</a>
+    </div>
+  </div>
+</div>
+
+
+<style>
+  h2 {
+    position: relative;
+    top: 15px;
+  }
+  /*position relative tells the object to position himself normally on the flow of the page, 
+  and you can tell it how much it should move from there with top, bottom, left, right.
+  Surrounding objects are not affected or moved, they still think the object is where its supposed to be*/
+  /*absolute takes the object out of the flow of the document, and automatically positions himself on the body,
+  unless it has a parent with a position:relative; to attach to, can be moved with top, bottom, l, r */
+  /*fixed doesnt move when user scrolls*/
+</style>
+<body>
+  <h1>On Being Well-Positioned</h1>
+  <h2>Move me!</h2>
+  <p>I still think the h2 is where it normally sits.</p>
+</body>
+
+
+
+<head>
+  <style>
+  	.relative{
+		position: relative;
+		padding:150px;
+	}
+    #left {
+      float: left;
+      width: 50%;
+      /*floats are removed from the flow and pushed to either side of their containing parent, used with width*/
+    }
+    #right {
+      float: right;
+      width: 40%;
+    }
+    aside, section {
+      padding: 2px;
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+	<div class="relative">
+  <header>
+    <h1>Welcome! Float</h1>
+  </header>
+  <section id="left">
+    <h2>Content</h2>
+    <p>Good stuff</p>
+  </section>
+  <aside id="right">
+    <h2>Sidebar</h2>
+    <p>Links</p>
+  </aside>
+</div>
+</body>
+
+
+<style>
+  .zind {
+    width: 60%;
+    height: 200px;
+    margin-top: 20px;
+  }
+
+  .first {
+    background-color: red;
+    position: absolute;
+    z-index: 2;
+
+  }
+  .second {
+    background-color: blue;
+    position: absolute;
+    left: 40px;
+    top: 50px;
+    z-index: 1;
+  }
+</style>
+<h1>z-index</h1>
+<div class="relative">
+	<div class="zind first"></div>
+	<div class="zind second"></div>
+</div>
+
+
+
+
+<style>
+
+  #centerhor {
+    background-color: blue;
+    height: 100px;
+    width: 100px;
+    margin: auto;
+    /*to center horizontally a block element we use margin auto
+    can also be done with inline elements like img, but first set diplay to block*/
+  }
+</style>
+<h2>center horizontally margin:auto;</h2>
+<div class="relative"><div id="centerhor"></div></div>
+
+<style>
+  .linear1 {
+    border-radius: 20px;
+    width: 70%;
+    height: 200px;
+    margin: 50px auto;
+    background: linear-gradient(35deg, #CCFFFF, #FFCCCC)
+    /*background: linear-gradient(gradient_direction, color 1, color 2, color 3, ...);*/
+  }
+  .repeating1{
+    border-radius: 20px;
+    width: 70%;
+    height: 200px;
+    margin:  50 auto;
+    background: repeating-linear-gradient(
+      90deg,
+      yellow 0px,
+      blue 40px,
+      green 40px,
+      red 80px
+    );
+  }
+  .repeating2{
+    border-radius: 20px;
+    width: 70%;
+    height: 200px;
+    margin:  50 auto;
+    background: repeating-linear-gradient(
+      45deg,
+      yellow 0px,
+      yellow 40px,
+      black 40px,
+      black 80px
+    );
+  }
+
+
+</style>
+
+<div class="linear1">
+	<h1>linear gradient colors</h1>
+</div>
+<div class="repeating1">
+	<h1>repeating linear gradient</h1>
+</div>
+<div class="repeating2">
+	<h1>repeating linear gradient</h1>
+</div>
+
+
+<style>
+  .backgroundimg {
+    background: url(https://cdn-media-1.freecodecamp.org/imgr/MJAkxbh.png);
+    height: 200px;
+    width: 200px;
+  }
+</style>
+<div class="backgroundimg"></div>
+
+
+<style>
+
+  .ball {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    background: linear-gradient(
+      35deg,
+      #0000FF,
+      #ff0000
+    );
+    border-radius: 50%;
+  }
+  #ball1 {
+    left: 20%;
+  }
+  #ball2 {
+    left: 65%;
+    transform: scale(1.5);
+    transform: skewY(-10deg);
+
+  }
+  #ball1:hover {
+  	transform: scale(1.5);
+  }
+  
+  #top {
+  	width: 30%;
+    height: 100px;
+    margin:  50px auto;
+    background-color: red;
+    transform: skewX(24deg);
+    transform: skewY(-10deg);
+  }
+  .moon-shape {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    background-color: transparent ;
+    border-radius: 50%;
+
+    box-shadow: 25px 10px 0px 0px blue;
+  }
+/*box-shadow property takes values for offset-x, offset-y, blur-radius, spread-radius and a color value in that order. 
+The blur-radius and spread-radius values are optional.*/
+
+</style>
+<h2>transform, scale to make somthing bigger, hover, skew</h2>
+<div class="ball" id= "ball1"></div>
+<div class="ball" id= "ball2"></div>
+<div id="top"></div>
+
+<h2>moonshape with box-shadow and border radius</h2>
+<div class="relative"><div class="moon-shape"></div></div>
+
+
+<style>
+  .heart {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: pink;
+    height: 50px;
+    width: 50px;
+    transform: rotate(-45deg);
+  }
+
+  /*before and after must have a content, 
+  used to add content before or after an element, usually text*/
+  .heart::after {
+    background-color: pink;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 0px;
+    left: 25px;
+  }
+  .heart::before {
+    content: "";
+    background-color: pink;
+    border-radius: 50%;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    left: 0px;
+  }
+</style>
+<h2>Heart, transform rotate ::before ::after</h2>
+<div class="relative"><div class="heart"></div></div>
+
+
+<style>
+  .animated-block {
+    height: 40px;
+    width: 70%;
+    background: black;
+    margin: 50px auto;
+    border-radius: 5px;
+  }
+
+  #rect {
+    animation-name: rainbow;
+    animation-duration: 4s;
+
+  }
+
+  @keyframes rainbow{
+    0% {
+      background-color: blue;
+    }
+    50% {
+      background-color: green;
+    }
+    100% {
+      background-color: yellow;
+    }
+  }
+
+
+
+
+</style>
+<h2>animation keyframes</h2>
+<div id="rect" class="animated-block"></div>
+
+
+<style>
+  #an-forward {
+    border-radius: 5px;
+    color: white;
+    background-color: #0F5897;
+    padding: 5px 10px 8px 10px;
+  }
+  #an-forward:hover {
+    animation-name: background-color;
+    animation-duration: 500ms;
+    /* Only change code below this line */
+    animation-fill-mode: forwards;
+    /* Only change code above this line */
+  }
+  @keyframes background-color {
+    100% {
+      background-color: #4791d0;
+    }
+  }
+</style>
+<h2>if you want to keep the animation after the time passes</h2>
+<button id="an-forward">Register</button>
+
+<style>
+  #rect2 {
+    height: 40px;
+    width: 70%;
+    background: black;
+    margin: 50px auto;
+    border-radius: 5px;
+    position: relative;
+  }
+
+  #rect2 {
+    animation-name: rainbow2;
+    animation-duration: 4s;
+  }
+
+  @keyframes rainbow2 {
+    0% {
+      background-color: blue;
+      top: 0px;
+      left: 0px;
+
+    }
+    50% {
+      background-color: green;
+      top: 50px;
+      left: 25px;
+      opacity: 0.1;
+
+    }
+    100% {
+      background-color: yellow;
+      top: 0px;
+      left:-25px;
+
+
+    }
+  }
+</style>
+
+<div id="rect2"></div>
+
+<style>
+
+  #ball3 {
+    width: 100px;
+    height: 100px;
+    margin: 50px auto;
+    position: relative;
+    border-radius: 50%;
+    background: linear-gradient(
+      35deg,
+      red,
+      blue
+    );
+    animation-name: bounce;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes bounce{
+  	0%{
+  		left: 0px;
+  	}
+    50% {
+    	left: 200px;
+      
+      width: 70px;
+
+    }
+    100%{
+    	left:0;
+    }
+
+  }
+</style>
+<h2>infinite animation</h2>
+<div id="ball3"></div>
+
+
+
+<style>
+  .back {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    top: 250px;
+    left: 0;
+    width: 50%;
+    height: 300px;
+    background: white;
+    animation-name: backdiv;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+
+  }
+
+  .heart {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: pink;
+    height: 50px;
+    width: 50px;
+    transform: rotate(-45deg);
+    animation-name: beat;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+
+  }
+  .heart:after {
+    background-color: pink;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 0px;
+    left: 25px;
+  }
+  .heart:before {
+    background-color: pink;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: -25px;
+    left: 0px;
+  }
+
+  @keyframes backdiv {
+    50% {
+      background: #ffe6f2;
+    }
+  }
+
+  @keyframes beat {
+    0% {
+      transform: scale(1) rotate(-45deg);
+    }
+    50% {
+      transform: scale(0.6) rotate(-45deg);
+    }
+  }
+
+</style>
+<div class="back">
+<div class="heart"></div>
+</div>
+
+<style>
+  .stars {
+    background-color: white;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    animation-iteration-count: infinite;
+  }
+
+  .star-1 {
+    margin-top: 15%;
+    margin-left: 60%;
+    animation-duration: 1s;
+    animation-name: twinkle;
+  }
+
+  .star-2 {
+    margin-top: 25%;
+    margin-left: 25%;
+    animation-duration: 0.9s;
+    animation-name: twinkle;
+  }
+
+  .star-3 {
+    margin-top: 10%;
+    margin-left: 50%;
+    animation-duration: 1.1s;
+    animation-name: twinkle;
+  }
+
+  @keyframes twinkle {
+    20% {
+      transform: scale(0.5);
+      opacity: 0.5;
+    }
+  }
+
+  #back {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    top: 200px;
+    left: 0;
+    width: 50%;
+    height: 400px;
+    background: linear-gradient(black, #000099, #66c2ff, #ffcccc, #ffeee6);
+  }
+</style>
+
+<div id="back">
+<div class="star-1 stars"></div>
+<div class="star-2 stars"></div>
+<div class="star-3 stars"></div>
+</div>
+
+
+<style>
+	.top-margin{
+		position: relative;
+		top: 300px;
+		height: 400px;
+		background-color: gray;
+	}
+  .balls {
+    border-radius: 50%;
+    background: linear-gradient(
+      35deg,
+      #ccffff,
+      #ffcccc
+    );
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin-top: 50px;
+    animation-name: bounce;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+  #ball11 {
+    left:17%;
+    animation-timing-function: ease;
+
+  }
+  #ball12 {
+    left:36%;
+    animation-timing-function: ease-in;
+
+  }
+  #ball13 {
+    left:57%;
+    animation-timing-function: ease-out;
+
+  }
+  #ball14 {
+    left:76%;
+    animation-timing-function: linear;
+
+  }
+
+  @keyframes bounce {
+    0% {
+      top: 0px;
+    }
+    100% {
+      top: 249px;
+    }
+  }
+
+</style>
+<div class="top-margin">
+	<h2>animation timing, ease, ease-in, ease-out, linear</h2>
+	<h3>cubic-bezier can also be used to manipulate accurately, speed, google it if needed</h3>
+
+<div class="balls" id="ball11"></div>
+<div class="balls" id="ball12"></div>
+<div class="balls" id="ball13"></div>
+<div class="balls" id="ball14"></div>
+</div>
+
+
+<h2>Accessibility practices</h2>
+<h3>use alt on images</h3>
+<img src="doingKarateWow.jpeg" alt="cat doing karate">
+<h4>if the image doesnt need an alt for whatever reason,decorative, bullets, etc, just put alt=""</h4>
+<h3>Use headings correctly</h3>
+<h4>Only one h1, per page, which is the title for SEO</h4>
+<h4>Use good semantic and hierarchy levels, h2>h3>h4>h5, sizing can be changed with css</h4>
+<h3>Use tags correctly, header, footer, nav, main, article, section, only one main per page</h3>
+
+<h3>audio</h3>
+<audio controls>
+  <source src="https://s3.amazonaws.com/freecodecamp/screen-reader.mp3" type="audio/mpeg">
+</audio>
+
+<h3>figures, figcaption</h3>
+<figure>
+  <img src="https://bit.ly/fcc-relaxing-cat" alt="Photo of Camper Cat executing a roundhouse kick">
+  
+  <figcaption>
+    Master Camper Cat demonstrates proper form of a roundhouse kick.
+  </figcaption>
+</figure>
+
+<h3>use labels in forms </h3>
+<label for="email">Email:</label>
+      <input type="text" id="email" name="email">
+<h3>Fieldset and legend for raio buttons</h3>
+<fieldset>
+        <legend>What level ninja are you?</legend>
+        <input id="newbie" type="radio" name="levels" value="newbie">
+        <label for="newbie">Newbie Kitten</label><br>
+        <input id="intermediate" type="radio" name="levels" value="intermediate">
+        <label for="intermediate">Developing Student</label><br>
+        <input id="master" type="radio" name="levels" value="master">
+        <label for="master">Master</label>
+</fieldset>
+<h3>setting dates</h3>
+<label for="pickdate">Preferred Date:</label>
+<input type="date" id="pickdate" name="date">
+<h3>use time inline tags</h3>
+<p>The best day to host the vaunted Mortal Kombat tournament is <time datetime="2016-09-15">Thursday, September 15<sup>th</sup></time>. May the best ninja win!</p>
+
+<h3>you can make some elements only visible to screen readers, check code.<h3>
+<style>
+	/*you can not do visibility:hidden; or display:none; those also hide it from screen readers,
+	and width and height must be bigger than 0px*/
+	.sr-only {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  top: auto;
+  overflow: hidden;
+}
+</style>
+<h3>check your text contrast to background, there are online tools, ex black text, white background lol</h3>
+<h3>use accesskeys, for important parts, or keyboard navigation</h3>
+<h3 tabindex="0">you can use tabindex="0", and specify the order of focus as the value of tabindex, as an attribute for when users are using tab, and the browser focuses on that. <br>
+Also useful that with tabindex you can now modiyfy css with :focus</h3>
+
+
+<!-- media query to change css styles for different screen sizes-->
+<style>
+@media (max-width: 100px) { /* CSS Rules */ }
+
+@media (min-height: 350px) { /* CSS Rules */ }
+
+
+/*img responsive, so always original size and not bigger than the page */
+
+.responsive-img {
+ max-width: 100%;
+  height: auto;
+}
+
+
+</style>
+<img class="responsive-img" src="https://s3.amazonaws.com/freecodecamp/FCCStickerPack.jpg" alt="freeCodeCamp stickers set">
+
+<!-- to ensure good image quality for high density displays, retina displays, its good standards, to put images at only half their size, 
+	ex a 200x200 image use height: 100px; width: 100px;-->
+
+<style >
+
+
+/*
+To change according to view window
+
+vw (viewport width): 10vw would be 10% of the viewport's width.
+vh (viewport height): 3vh would be 3% of the viewport's height.
+vmin (viewport minimum): 70vmin would be 70% of the viewport's smaller dimension (height or width).
+vmax (viewport maximum): 100vmax would be 100% of the viewport's bigger dimension (height or width).
+
+body {
+	width:; 30vw;
+}
+*/
+.hih2 {
+    width: 80vw;
+    font-size: 5vmax;
+}
+.par {
+    width: 75vmin;
+}
+</style>
+
+<h1>Flexbox, flex-direction, justify-content, align-items</h1>
+
+<style>
+  #box-container {
+    height: 500px;
+    /*this enables flex*/
+    display: flex;
+    /*
+    Adding display: flex to an element turns it into a flex container. This makes it possible to align any children of that element into rows or columns. You do this by adding the flex-direction property to the parent item and setting it to row or column. Creating a row will align the children horizontally, and creating a column will align the children vertically.
+
+Other options for flex-direction are row-reverse and column-reverse.
+
+Note: The default value for the flex-direction property is row. row, column, row-reverse, column-reverse
+*/
+	flex-direction: row-reverse;
+	background-color: grey;
+	height: 500px;
+	/*justify content align items along main axis, horizontally for rows, vertical for column flex-direction 
+    can be center, flex-start, flex-end, space-between, space-around, space-evenly*/
+    justify-content: center;
+    /*align-items is for cross axis, can be center, flex-start, flex-end, center, stretch this is default, baseline*/
+    align-items: center;
+
+   
+  }
+
+  #box-1 {
+    background-color: dodgerblue;
+    width: 25%;
+    height: 25%;
+  }
+
+  #box-2 {
+    background-color: orangered;
+    width: 25%;
+    height: 25%;
+
+  }
+</style>
+
+<div id="box-container">
+  <div id="box-1"></div>
+  <div id="box-2"></div>
+</div>
+
+<style >
+	
+	#box-container1 {
+    background: gray;
+    display: flex;
+    height: 500px;
+     /*flex-wraps tells extra items move into a new row or column. The break point of where the wrapping happens depends on the size of the items and the size of the container.
+    we can use nowrap (defualt), default, wrap, wrap-reverse*/
+    
+    flex-wrap: wrap;
+
+  }
+  #box-11 {
+    background-color: dodgerblue;
+    width: 25%;
+    height: 50%;
+  }
+
+  #box-21 {
+    background-color: orangered;
+    width: 25%;
+    height: 50%;
+  }
+  #box-3 {
+    background-color: violet;
+    width: 25%;
+    height: 50%;
+  }
+  #box-4 {
+    background-color: yellow;
+    width: 25%;
+    height: 50%;
+  }
+  #box-5 {
+    background-color: green;
+    width: 25%;
+    height: 50%;
+  }
+  #box-6 {
+    background-color: black;
+    width: 25%;
+    height: 50%;
+  }
+</style>
+<h2> flex-wrap <h2>
+<div id="box-container1">
+  <div id="box-11"></div>
+  <div id="box-21"></div>
+  <div id="box-3"></div>
+  <div id="box-4"></div>
+  <div id="box-5"></div>
+  <div id="box-6"></div>
+</div>
+
+<h2>flex-shrink<h2>
+<!-- when there is nowrap, flex-shrink tells us how much should a item be shrinked compared to others,
+	The bigger the number the more itll shrink compared -->
+<style>
+  #box-container2 {
+    display: flex;
+    height: 500px;
+  }
+  #box-12 {
+    background-color: dodgerblue;
+    width: 100%;
+    height: 200px;
+    flex-shrink: 1;
+
+  }
+
+  #box-22 {
+    background-color: orangered;
+    width: 100%;
+    height: 200px;
+    flex-shrink: 2;
+
+  }
+</style>
+
+<div id="box-container2">
+  <div id="box-12"></div>
+  <div id="box-22"></div>
+</div>
+
+<h2>flex grow</h2>
+<style>
+  #box-container3 {
+    display: flex;
+    height: 500px;
+    
+  }
+ /*note that boxes, dont have a width size, so if we didnt have flex grow, they wont even appear on screen,
+ flex, grow allows them to occupy full container space, no matter the size, bigger the number bigger space*/
+  #box-13 {
+    background-color: dodgerblue;
+    height: 200px;
+    flex-grow: 1;
+
+  }
+
+  #box-23 {
+    background-color: orangered;
+    height: 200px;
+    flex-grow:2;
+
+  }
+</style>
+
+<div id="box-container3">
+  <div id="box-13"></div>
+  <div id="box-23"></div>
+</div>
+
+<h2>flex shorthand, order</h2>
+
+<!--
+	There is a shortcut available to set several flex properties at once. The flex-grow, flex-shrink, and flex-basis properties can all be set together by using the flex property.
+
+For example, flex: 1 0 10px; will set the item to flex-grow: 1;, flex-shrink: 0;, and flex-basis: 10px;.
+
+The default property settings are flex: 0 1 auto;.
+These values will cause #box-1 to grow to fill the extra space at twice the rate of #box-2 when the container is greater than 300px and shrink at twice the rate of #box-2 when the container is less than 300px. 300px is the combined size of the flex-basis values of the two boxes.
+
+Order, tells what order for the items to appear, default is order of html appearance
+-->
+<style>
+  #box-container4 {
+    display: flex;
+    height: 500px;
+  }
+  #box-14 {
+    background-color: dodgerblue;
+    flex: 2 2 150px;
+    order: 2;
+    height: 200px;
+  }
+
+  #box-24 {
+    background-color: orangered;
+    flex: 1 1 150px;
+    order: 1;
+    height: 200px;
+  }
+</style>
+
+<div id="box-container4">
+  <div id="box-14"></div>
+  <div id="box-24"></div>
+</div>
+
+
+<h2>Align self, overrides align-items</h2>
+<style>
+  #box-container5 {
+    display: flex;
+    height: 400px;
+  }
+  #box-15 {
+    background-color: dodgerblue;
+    align-self: center;
+    height: 200px;
+    width: 200px;
+  }
+
+  #box-25 {
+    background-color: orangered;
+    align-self: flex-end;
+    height: 200px;
+    width: 200px;
+  }
+</style>
+
+<div id="box-container5">
+  <div id="box-15"></div>
+  <div id="box-25"></div>
+</div>
+
+
+<h1> CSS GRID, template, gap, lines, justify-self, align-self, justify-items, align-items desc.</h1>
+
+ <style>
+  .d1{background:LightSkyBlue;}
+  .d2{background:LightSalmon;}
+  .d3{background:PaleTurquoise;}
+  .d4{background:LightPink;}
+  .d5{background:PaleGreen;}
+
+  .container {
+    font-size: 40px;
+    width: 100%;
+    height: 300px;
+    background: LightGray;
+    display: grid;
+    
+
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 50px 50px;
+
+    /*you can also use different absolute and relative units like px and em,
+    fr is for fraction of the content space, auto sets it to width or height of content automatically, % is self explanatory*/
+    grid-template-columns: auto 50px 10% 2fr 1fr;
+
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+
+
+
+    /*gap is done by grid-column-gap, grid-row-gap*/
+    grid-row-gap: 10px;
+    grid-column-gap: 20px;
+    /*for both at once grid-gap: 10px; does row and col at same time, if we use two values first its row and the column*/
+    grid-gap: 10px 20px;
+
+
+  }
+
+  .d5{
+  	/*grid-column is to tell the item to occupy space from 2nd line to 4th line, so basically two spaces, 
+  	a 3x3 has 4 lines in each direction, remember about the start line and end line | item1 | item2 | item3 |, 4 lines */
+  	grid-column: 2 / 4;
+  	grid-row: 2 / 4;
+  }
+
+  /*To justify-self is to position the contents or cell of an item, stretch is default, start, center, end.
+  We can do it for all of the items together, doing it in the container and using justify-items: center; align-items: end;*/
+  .d2{
+  	justify-self: center;
+  	align-self: end;
+  }
+
+  .d3{
+  	/*if we want to center we can use flex lol, or create a span and use margin auto*/
+  	
+  	/*display: flex;
+  justify-content: center;
+  align-items: center;*/
+
+  /*.centered-content{
+  margin: auto;
+}*/
+
+	/*can also work with nested grid*/
+
+	display: grid;
+	/*place-items: center;*/
+	justify-items: center;
+	align-items: center; 
+	
+  }
+</style>
+
+<div class="container">
+  <div class="d1">1</div>
+  <div class="d2">2</div>
+  <div class="d3"><span class="centered-content">3</span></div>
+  <div class="d4">4</div>
+  <div class="d5">5</div>
+</div>
+
+
+<h2>grid template area, repeat, minmax, auto-fill, auto-fit</h2>
+
+<style>
+
+  .container-template {
+    font-size: 40px;
+    min-height: 300px;
+    width: 100%;
+    background: LightGray;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    /*grid-template-columns: repeat(3, minmax(90px, 1fr));
+	minimum 90px and maximum 1fr
+
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+	keeps stretching the 60px columns, until it can insert a new one. cool
+
+	grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+	autofit is better, because it doesnt create new columns if the columns or rows are empty, stretches the existing ones.
+	great!!! if we have many items, cards, etc. not necessary to do grid-template-areas
+	container
+	item1
+	item2
+	item3
+	item4
+	item5
+    */
+    grid-template-rows: repeat(3, 1fr);
+    /*can alse include more on the repeat
+    grid-template-columns: repeat(2, 1fr 50px) 1fr 100px; 
+
+    for the minmax
+    grid-template-columns: 100px minmax(50px, 200px);
+    the first column is 100px wide, and the second is a minimum 50px and max 200px*/
+    grid-gap: 10px;
+    grid-template-areas:
+      "header header header"
+      "nav content content"
+      "nav content content"
+      "footer footer footer";
+
+      /* . signifies empty*/
+  }
+
+
+/*If you dont have a grid area for reference, use grid area like this to use lines for positioning
+grid-area: horizontal line to start at / vertical line to start at / horizontal line to end at / vertical line to end at;
+grid-area:1/1/2/4; would be equal to header in the grid area template */
+
+  .item11{
+  	grid-area: header;
+  	background:LightSkyBlue;
+  }
+  .item21{
+  	grid-area: nav;
+  	background:LightSalmon;
+  }
+  .item31{
+  	grid-area: content;
+  	background:PaleTurquoise;
+  }
+  .item41{
+  	grid-area: footer;
+  	background:LightPink;
+  }
+</style>
+
+<div class="container-template">
+  <div class="item11">header area</div>
+  <div class="item21">nav area</div>
+  <div class="item31">content</div>
+  <div class="item41">footer</div>
+  
+</div>
+
+<h2>grid with media queries, change horizontal size</h2>
+
+<style>
+  .item12 {
+    background: LightSkyBlue;
+    grid-area: header;
+  }
+
+  .item22 {
+    background: LightSalmon;
+    grid-area: advert;
+  }
+
+  .item32 {
+    background: PaleTurquoise;
+    grid-area: content;
+  }
+
+  .item42 {
+    background: lightpink;
+    grid-area: footer;
+  }
+
+  .container-template2 {
+    font-size: 1.5em;
+    min-height: 300px;
+    width: 100%;
+    background: LightGray;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px auto 1fr auto;
+    grid-gap: 10px;
+    grid-template-areas:
+      "header"
+      "advert"
+      "content"
+      "footer";
+  }
+
+  @media (min-width: 300px){
+    .container-template2{
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas:
+        "advert header"
+        "advert content"
+        "advert footer";
+    }
+  }
+
+  @media (min-width: 400px){
+    .container-template2{
+      grid-template-areas:
+      /* Only change code below this line */
+        "header header"
+        "advert content"
+        "footer footer";
+      /* Only change code above this line */
+    }
+  }
+</style>
+
+<div class="container-template2">
+  <div class="item12">header</div>
+  <div class="item22">advert</div>
+  <div class="item32">content</div>
+  <div class="item42">footer</div>
+</div>
+
+
+
+
+
+<!--to insert javascript in html-->
+<html>
+  <body>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
+
+
+
+<div id="container">
+  <div class="display"></div>
+  <div class="controls"></div>
+</div>
+<!--we can select them with-->
+
+<style>
+/*
+div.display{
+
+}
+.display{}
+#container > .display{}
+div#container > div.display{}
+*/
+</style>
+

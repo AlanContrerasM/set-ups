@@ -1,0 +1,5 @@
+Understand the problem
+Plan
+    How we are going to solve it
+Write PseudoCode
+Divide and Conquer

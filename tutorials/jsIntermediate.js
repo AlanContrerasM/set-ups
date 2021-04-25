@@ -1,0 +1,271 @@
+//objects
+
+//object literal
+const myObject = {
+    property: 'Value!',
+    otherProperty: 77,
+    "obnoxious property": function() {
+      // do stuff!
+   }
+}
+myObject.property // 'Value!'
+myObject["obnoxious property"] // [Function], can also be used for variables
+
+
+//if you need to duplicate something many times its better to use
+//object constructors
+function Player(name, marker) {
+    this.name = name;
+    this.marker = marker;
+    this.sayName = function() {
+        console.log(name)
+    }
+}
+const player = new Player('steve', 'X')
+console.log(player.name) // 'steve'
+player1.sayName() // logs 'steve'
+player2.sayName() // logs 'also steve'
+
+//add functions with prototype its better, because we only set on instance for all the objects
+//don't use arrow functions when doing .prototype. work, it doesnt work.
+Player.prototype.doSomething = function(){console.log(this.name +" does something")}
+player2.doSomething();
+console.log(player2.constructor); // Player()
+
+//book example
+function Book(title, author, pages, read){
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.info = () =>{return `${title} by ${author}, ${pages} pages, ${read}.`}
+}
+const theHobbit = new Book("The Hobbit", "Tolkien", 396, "not read yet")
+console.log(theHobbit.info());
+
+
+//a little prototype based inheritance
+function Plant () {
+    this.country = "Mexico";
+    this.isOrganic = true;
+}
+
+// Add the showNameAndColor method to the Plant prototype property
+Plant.prototype.showNameAndColor =  function () {
+    console.log("I am a " + this.name + " and my color is " + this.color);
+}
+
+
+function Fruit (fruitName, fruitColor) {
+    this.name = fruitName;
+    this.color = fruitColor;
+}
+
+// Set the Fruit's prototype to Plant's constructor, thus inheriting all of Plant.prototype methods and properties.
+Fruit.prototype = Object.create(Plant.prototype); //recommended method
+
+//can also be done Fruit.prototype = new Plant(); not recommended
+// Creates a new object, aBanana, with the Fruit constructor
+var aBanana = new Fruit ("Banana", "Yellow");
+aBanana.showNameAndColor();
+
+//they all inherit from Object.prototype
+
+
+
+
+
+//factory functions, 
+//doesn't run into issues when using this
+//constructors, protos, etc. doesn't use new
+
+const personFactory = (name, age) => {
+    const sayHello = () => console.log('hello!');
+    const sayEverything = () => console.log({name, age})
+    return { name, age, sayHello, sayEverything };
+    //before ES6 it used to be return([name: name, age: age...])
+    //try running sayEverything, will log(name: jeff, age: 27)!
+};
+
+const jeff = personFactory('jeff', 27);
+
+console.log(jeff.name); // 'jeff'
+jeff.sayHello(); // calls the function and logs 'hello!'
+
+
+//taking advantage of private and public scoping on function factories
+const FactoryFunction = string => {
+    const capitalizeString = () => string.toUpperCase();
+    const printString = () => console.log(`----${capitalizeString()}----`);
+    return { printString };
+};
+
+const taco = FactoryFunction('taco');
+
+printString(); // ERROR!!
+capitalizeString(); // ERROR!!
+taco.capitalizeString(); // ERROR!!
+taco.printString(); // this prints "----TACO----"
+
+
+//another example
+const counterCreator = () => {
+    let count = 0;
+    return () => {console.log(count);  count++;};
+};
+
+const counter = counterCreator(); 
+counter(); // 0
+counter(); // 1
+
+//Player factory function, with some functions that are private
+const Player = (name, level) => {
+    let health = level * 2;
+    const getLevel = () => level;
+    const getName  = () => name;
+    const die = () => {
+      // uh oh
+    };
+    const damage = x => {
+      health -= x;
+      if (health <= 0) {
+        die();
+      }
+    };
+    const attack = enemy => {
+      if (level < enemy.getLevel()) {
+        damage(1);
+        console.log(`${enemy.getName()} has damaged ${name}`);
+      }
+      if (level >= enemy.getLevel()) {
+        enemy.damage(1);
+        console.log(`${name} has damaged ${enemy.getName()}`);
+      }
+    };
+    return {attack, damage, getLevel, getName}
+  };
+  
+  const jimmie = Player('jim', 10);
+  const badGuy = Player('jeff', 5);
+  jimmie.attack(badGuy);
+
+
+
+
+//inheritance with factory functions
+const Person = (name) => {
+    const sayName = () => console.log(`my name is ${name}`)
+    return {sayName}
+}
+  
+const Nerd = (name) => {
+    // simply create a person and pull out the sayName function with destructuring assignment syntax!
+    const {sayName} = Person(name)
+    const doSomethingNerdy = () => console.log('nerd stuff')
+    return {sayName, doSomethingNerdy}
+}
+
+const jeff = Nerd('jeff')
+
+jeff.sayName() //my name is jeff
+jeff.doSomethingNerdy() // nerd stuff
+
+//if we wanted to inherit everything
+const Nerd = (name) => {
+const prototype = Person(name)
+const doSomethingNerdy = () => console.log('nerd stuff')
+return Object.assign({}, prototype, {doSomethingNerdy})
+}
+
+
+
+
+
+
+
+//modules, for doing private and public scoping
+const Module = (()=> {
+let _aPrivateVar = "hello darkness"
+let _privateMethod = function () {};
+let publicMethod = function () {
+    _privateMethod();
+};
+let anotherPublicMethod = ()=>{
+    //something
+    console.log(_aPrivateVar);
+}
+return {
+    publicMethod,
+    anotherPublicMethod
+}
+})();
+Module.anotherPublicMethod();
+
+//another module example
+const calculator = (() => {
+    const add = (a, b) => a + b;
+    const sub = (a, b) => a - b;
+    const mul = (a, b) => a * b;
+    const div = (a, b) => a / b;
+    return {
+      add,
+      sub,
+      mul,
+      div,
+    };
+})();
+
+calculator.add(3,5) // 8
+calculator.sub(6,2) // 4
+calculator.mul(14,5534) // 77476
+
+
+//classes
+class Rectangle {
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
+  // Getter
+  get area() {
+    return this.calcArea();
+  }
+  // Method
+  calcArea() {
+    return this.height * this.width;
+  }
+
+  static calcSum(a,b){
+      return a+b;
+  }
+}
+
+const square = new Rectangle(10, 10);
+
+console.log(square.area); // 100
+console.log(square.calcSum()); //error
+console.log(Rectangle.calcSum(5,5)); //10
+
+//extending classes
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  speak() {
+    console.log(`${this.name} makes a noise.`);
+  }
+}
+
+class Dog extends Animal {
+  constructor(name) {
+    super(name); // call the super class constructor and pass in the name parameter
+  }
+
+  speak() {
+    console.log(`${this.name} barks.`);
+  }
+}
+
+let d = new Dog('Mitzie');
+d.speak(); // Mitzie barks.
