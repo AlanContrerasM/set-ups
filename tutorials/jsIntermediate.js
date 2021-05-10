@@ -269,3 +269,106 @@ class Dog extends Animal {
 
 let d = new Dog('Mitzie');
 d.speak(); // Mitzie barks.
+
+
+
+//JSON
+//is used to save objects to text, and vice versa, can be used in local storage
+let myObj, myJSON, text, obj;
+
+// Storing data:
+myObj = { name: "John", age: 31, city: "New York" };
+myJSON = JSON.stringify(myObj);
+localStorage.setItem("testJSON", myJSON);
+
+// Retrieving data:
+text = localStorage.getItem("testJSON");
+obj = JSON.parse(text);
+document.getElementById("demo").innerHTML = obj.name;
+
+
+//to parse dates:
+var text = '{ "name":"John", "birth":"1986-12-14", "city":"New York"}';
+var obj = JSON.parse(text);
+obj.birth = new Date(obj.birth);
+document.getElementById("demo").innerHTML = obj.name + ", " + obj.birth; 
+
+//or use  reviver
+var text = '{ "name":"John", "birth":"1986-12-14", "city":"New York"}';
+var obj = JSON.parse(text, function (key, value) {
+  if (key == "birth") {
+    return new Date(value);
+  } else {
+    return value;
+  }
+});
+document.getElementById("demo").innerHTML = obj.name + ", " + obj.birth;
+
+
+
+//to create http requests
+let requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+let request = new XMLHttpRequest();
+request.open('GET', requestURL);
+//here we directly convert into javascript object, cause we received the json object
+request.responseType = 'json';
+request.send();
+request.onload = function() {
+  const superHeroes = request.response;
+  console.log(superHeroes);
+}
+
+//if we dont specify responseType json, or we are just getting a string
+request.responseType = 'text';
+request.send();
+request.onload = function() {
+  const superHeroes = JSON.parse(request.response);
+  console.log(superHeroes);
+}
+
+
+//w3 school example
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var myArr = JSON.parse(this.responseText);
+    document.getElementById("demo").innerHTML = myArr[0];
+  }
+};
+xmlhttp.open("GET", "json_demo_array.txt", true);
+xmlhttp.send();
+
+
+
+//callback, are just using calling functions inside of asynch functions
+//to be performed only after something is done loading
+function greeting(name) {
+  alert('Hello ' + name);
+}
+function processUserInput(callback) {
+  var name = prompt('Please enter your name.');
+  callback(name);
+}
+processUserInput(greeting);
+
+//this is also a callback
+myDiv.addEventListener("click", function(){
+  // do something!
+})
+
+var fs = require('fs')
+fs.readFile('movie.mp4', finishedReading)
+
+function finishedReading(error, movieData) {
+  if (error) return console.error(error)
+  // do something with the movieData
+}
+
+
+
+//promises
+const myData = getData() // if this is refactored to return a Promise...
+
+myData.then(function(data){ // .then() tells it to wait until the promise is resolved
+  const pieceOfData = data['whatever'] // and THEN run the function inside
+})
