@@ -417,20 +417,23 @@ createPost({ title: "Post Three", body: "This is post three" })
   .then(getPosts)
   .catch((err) => console.log(err));
 
-
 //Promise.all
 const promise1 = Promise.resolve("Hello World!");
 const promise2 = 10;
-const promise3 = new Promise((resolve, reject)=>{
-  setTimeout(resolve, 2000, "Goodbye")
-})
-const promise4 = fetch('https://jsonplaceholder.typicode.com/users').then(res=>res.json())
+const promise3 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 2000, "Goodbye");
+});
+const promise4 = fetch(
+  "https://jsonplaceholder.typicode.com/users"
+).then((res) => res.json());
 
-Promise.all([promise1, promise2, promise3]).then(values => console.log(values));
+Promise.all([promise1, promise2, promise3]).then((values) =>
+  console.log(values)
+);
 
 //Async / Await, super easyyyyy
 
-async function init(){
+async function init() {
   await createPost({ title: "Post Three", body: "This is post three" });
 
   getPosts();
@@ -438,11 +441,28 @@ async function init(){
 
 init();
 
-async function fetchUsers(){
-  const res = await fetch('https://jsonplaceholder.typicode.com/users');
+async function fetchUsers() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/users");
 
   const data = await res.json();
   console.log(data);
 }
 
 fetchUsers();
+
+//APIs
+// URL (required), options (optional)
+fetch("https://url.com/some/url")
+  .then(function (response) {
+    // Successful response :)
+  })
+  .catch(function (err) {
+    // Error :(
+  });
+
+//use cors mode to be able to make requests to outside sources.
+fetch("url.url.com/api", {
+  mode: "cors",
+});
+
+//example on tests.js file 
