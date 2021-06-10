@@ -1,12 +1,15 @@
 "use strict";
 import _ from "lodash"; //optional, must run npm install --save lodash
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import { DisplayController, Player } from "./myModule.js";
 import "./css/reset.css";
 import "./css/style.css";
 import Icon from './media/washington.ico';
 
 
-
+//add FavIcon
+DisplayController.addFavIcon(Icon);
 
 
 
@@ -34,12 +37,3 @@ document.getElementsByTagName("main")[0].appendChild(component());
 
 
 
-//adding icon
-let link = document.querySelector("link[rel~='icon']");
-if (!link) {
-  link = document.createElement("link");
-  link.rel = "icon";
-  link.type = "image/ico";
-  document.getElementsByTagName("head")[0].appendChild(link);
-}
-link.href = Icon;

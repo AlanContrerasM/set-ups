@@ -14,7 +14,18 @@ const DisplayController  = (()=>{
         _showPopUp(something);
     }
 
-    return {saySomething}
+    let addFavIcon =(Icon) =>{
+        let link = document.querySelector("link[rel~='icon']");
+        if (!link) {
+        link = document.createElement("link");
+        link.rel = "icon";
+        link.type = "image/ico";
+        document.getElementsByTagName("head")[0].appendChild(link);
+        }
+        link.href = Icon;
+    }
+
+    return {saySomething, addFavIcon}
 })();
 
 
