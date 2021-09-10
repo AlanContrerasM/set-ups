@@ -8,6 +8,8 @@ npm init -y
 npm install webpack webpack-cli --save-dev
 npm install --save-dev style-loader css-loader
 npm install -D babel-loader @babel/core @babel/preset-env core-js regenerator-runtime webpack
+npm install --save-dev jest
+npm install --save-dev babel-jest @babel/core @babel/preset-env
 //if eslint is installed globally, which it is in this computer. otherwise
 eslint --init 
 npm install --save-dev eslint-config-prettier
@@ -41,7 +43,8 @@ inside package.json we can include npm scripts inside "scripts"
 For example:
 "build": "webpack --progress --mode=production",
 "watch": "webpack --progress --watch --mode=production",
-"watchdev": "webpack --progress --watch --mode=development" 
+"watchdev": "webpack --progress --watch --mode=development",
+"test": "jest" 
 now we can run webpack and create the bundle with 
 npm run build
 
