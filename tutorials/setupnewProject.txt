@@ -3,16 +3,26 @@ create on github
 git clone githublink/webpack-demo
 
 
+cp -a initfiles/. webpack-demo/
 cd webpack-demo
+
+
 npm init -y
+eslint --init 
 npm install webpack webpack-cli --save-dev
 npm install --save-dev style-loader css-loader
 npm install -D babel-loader @babel/core @babel/preset-env core-js regenerator-runtime webpack
 npm install --save-dev jest
 npm install --save-dev babel-jest @babel/core @babel/preset-env
-//if eslint is installed globally, which it is in this computer. otherwise
-eslint --init 
 npm install --save-dev eslint-config-prettier
+
+npm install --save-dev webpack webpack-cli style-loader css-loader babel-loader @babel/core @babel/preset-env core-js regenerator-runtime webpack jest babel-jest ts-jest eslint-config-prettier
+
+//if eslint is installed globally, which it is in this computer. otherwise
+
+//jest --init not necesary since config file copied from initial temp[late]
+
+
 add the folowing to the extends object in .eslintrc.*
 {
   "extends": [
@@ -30,9 +40,7 @@ This is so we don't accidentally publish it.
 
 
 
-cd ..
-cp -a initfiles/. webpack-demo/
-cd webpack-demo
+
 
 
 *we install lodash, this is optional, but delete import line in index.js

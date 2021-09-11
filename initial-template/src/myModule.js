@@ -45,6 +45,15 @@ const Player = (human = "Hi Player") =>{
     return {setChoice, getChoice, addCounter, getCounter, getPlayer}
 }
 
+const testeableFunction = (()=>{
+    
+    let sum = (a, b) =>{
+        return a + b;
+      }
+
+    return {sum}
+})();
+
 //const human = Player("Alan");
 
-export {Player, DisplayController};
+export {Player, DisplayController, testeableFunction};
