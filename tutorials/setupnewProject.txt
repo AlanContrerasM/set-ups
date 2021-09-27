@@ -58,5 +58,20 @@ npm run build
 
 ctrl + shit + p  >Format Document to pretify it
 
+
+
+
+
+
 to upload to github pages and so it can load from dist folder
 git subtree push --prefix dist origin gh-pages
+
+
+
+----- 
+react
+npx create-react-app myReact
+
+cd myReact 
+npm start
+
