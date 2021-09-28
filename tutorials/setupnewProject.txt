@@ -75,3 +75,52 @@ npx create-react-app myReact
 cd myReact 
 npm start
 
+
+
+
+--------
+rails
+
+create the rails project folder
+on terminal
+sudo rails new projectname
+
+//to create controllers
+rails g controller home index
+
+//start server 
+rails s
+//it'll be on localhost:3000  and localhost/3000/home/index
+
+//you can modify routes on config routes
+//for example add the new route for root on the file
+root 'home#index'
+
+//you can edit on app/views/
+
+//if you want to create more pages, create a ne .html.erb on the created home folder in views, add it to the home controller, and add it to routes
+
+//create a scaffold, basically a model
+rails g scaffold friends first_name:string last_name:string email:string phone:string twitter:string
+//now create the schema, basically make the db live
+rails db:migrate
+
+//delete or comment out everything on new css files created with the scaffold, otherwise messes up with bootstrap
+
+//localhost:3000/friends will have your db and you can edit out anything
+//run rails routes if you want to see the routes created and from them create links
+
+//to add authentication, and/or add gems
+//search in google ruby gems, likely rubygems.org
+//find devise, and you'll see the code for Copy Pasting to the GemFile on your project
+gem 'devise', '~> 4.8' 
+//run
+bundle install
+//from the gem library page on the rubygems.org go to the documentation and see the setup steps. 
+//run the specified generator and also follow steps prompted, and continue doing the documentation steps
+//replace MODEL for user
+//https://github.com/heartcombo/devise
+
+//create associations
+https://guides.rubyonrails.org/association_basics.html
+
