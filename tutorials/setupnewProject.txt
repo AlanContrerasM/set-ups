@@ -80,6 +80,7 @@ npm start
 
 --------
 rails
+https://www.youtube.com/watch?v=fmyvWz5TUWg
 
 create the rails project folder
 on terminal
@@ -98,7 +99,21 @@ root 'home#index'
 
 //you can edit on app/views/
 
-//if you want to create more pages, create a ne .html.erb on the created home folder in views, add it to the home controller, and add it to routes
+//if you want to create more pages, create a new .html.erb on the created home folder in views, add it to the home controller, and add it to routes
+
+//also a good idea to create a nav bar, alerts, and/or footer and include it on your application on views. save them as _header.html.erb
+//on application
+<%= render "home/header" %>
+
+    <div class="container">
+    <br/>
+    <% if notice %>
+      <%= render "layouts/alerts" %>  
+    <% end %>
+      <br/>
+      
+      <%= yield %>
+    </div>
 
 //create a scaffold, basically a model
 rails g scaffold friends first_name:string last_name:string email:string phone:string twitter:string
@@ -119,8 +134,157 @@ bundle install
 //from the gem library page on the rubygems.org go to the documentation and see the setup steps. 
 //run the specified generator and also follow steps prompted, and continue doing the documentation steps
 //replace MODEL for user
+//example of codes you should run, check documentation guide
 //https://github.com/heartcombo/devise
 
-//create associations
-https://guides.rubyonrails.org/association_basics.html
+rails generate devise:install
+//follow instructions prompted and from the docs, one of the steps is to add this to your config/environments/development
+//config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+rails g devise:views
+rails generate devise user
+rails db:migrate
+
+//look at your routes by running rails routes
+//now you have a working auth system, set up your links on the nav bar, or wherever you need helpers like this
+<% if user_signed_in?%>
+    <li class="nav-item">
+        <%= link_to "Add Friends", new_friend_path, class:"nav-link" %>
+    </li>
+    <li class="nav-item">
+    <%= link_to "Profile", edit_user_registration_path, class:"nav-link" %>
+    </li>
+    <li class="nav-item">
+        <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class:"nav-link" %>
+    </li>
+<%else %>
+    <li class="nav-item">
+    <%= link_to "Sign Up", new_user_registration_path, class:"nav-link" %>
+    </li>
+    <li class="nav-item">
+        <%= link_to "Sign In", new_user_session_path, class:"nav-link" %>
+    </li>
+<% end %>
+
+
+
+//create associations
+//before creating associations, delete all the created friends, and or users
+//see which associations you need on
+//https://guides.rubyonrails.org/association_basics.html
+//on app/models, let's do friend model, add:
+belongs_to :user
+//now on the user model
+has_many :friends
+//save them 
+//got to db/schema  we are gonna have a friends and user table, just so you see the changes
+//run on the terminal
+rails g migration add_user_id_to_friends user_id:integer:index
+//also
+rails db:migrate
+//now on app/views/friends/_form create a new hidden input on the form to accept the new idea
+<div class="field form-group">
+    <%= form.number_field :user_id, id: :friend_user_id, class:"form-control", value:current_user.id, type: :hidden, :required => 'required'  %>
+</div>
+//it wont let you submit just yet, on the friends controller, you need to update it to accept a new input, at the end on params edit it
+params.require(:friend).permit(:first_name, :last_name, :email, :phone, :twitter, :user_id)
+
+//to be able to restrict what a not logged in user can see or do specify on the friends controller, add the line
+before_action :authenticate_user!, except: [:index, :show]
+//if user not logged in, they will only be able to access index and show options.
+
+//if the user is in index, he will be able to see all friends, from all users, and able to edit them delete, etc.. we dont want that
+//we can do this, but not ideal
+<% if friend.user == current_user%>
+  <td><%= link_to 'Edit', edit_friend_path(friend) %></td>
+  <td><%= link_to 'Destroy', friend, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<%else%>
+  <td></td>
+  <td></td>
+<%end%>
+
+
+//if we want to do it correctly on our friends controller add this before the privates,
+ def correct_user
+  @friend = current_user.friends.find_by(id: params[:id])
+  redirect_to friends_path, notice: "Not Authorized to Edit This Friend" if @friend.nil?
+end
+//basically a function that can help us authenticate if the friend belongs to the user.
+//we use this function in the new before action to add
+before_action :correct_user, only: [:edit, :update, :destroy]
+
+//we are gonna edit on the same controller some other functions so everytime we add new friend or update it
+//we keep working or create it from the user
+# GET /friends/new   //this is a comment
+def new
+  # @friend = Friend.new 
+  @friend = current_user.friends.build
+end
+
+//do it on create
+# POST /friends or /friends.json
+def create
+  # @friend = Friend.new(friend_params)
+  @friend = current_user.friends.build(friend_params)
+# ... extra stuff leave the same
+
+
+
+//if you want to stylize the page more, change the root in our config/routes to friends#index
+//and in index you can do this
+<% if user_signed_in? %>
+  all my previous code in index
+<% else %>
+  <h1>Hello World</h1>
+  <p>This is alan</p>
+<% end %>
+
+//you can edit a little bit your styles at this point
+
+
+
+//if you want to create a new view for the friends controller
+//on friends controller add your new function 
+def personal
+  @friends = Friend.filter_user(current_user)
+end
+//we created that function in our friend model
+def self.filter_user(user)
+    
+    where(user: user)
+end
+
+
+//on routes add, you can check specific  route on rails route
+get '/friends/personal' => 'friends#personal'
+
+//add the new path to a link, again check on rails routes
+<%= link_to "My Friends", friends_personal_path, class:"nav-link" %>
+
+
+//at this point you can start thinking about deployment, for that:
+//go to your gemfile and the line for gem sqlite 3 move it to group development, not the test one!
+//head to rubygems and look for 'pg' which is postgres and get the gem, create a production on your gemfile
+group :production do
+  gem 'pg', '~> 1.2', '>= 1.2.3'
+end
+
+//run
+bundle install --without production
+
+//commit your changes and push
+//now run
+git push heroku main
+
+//google heroku ruby on rails pg, you would find something like this with instructions, but probably not needed
+//https://devcenter.heroku.com/articles/getting-started-with-rails6
+
+
+-----------
+//publish to heroku
+
+//run on terminal
+heroku login
+//go to your project folder
+heroku create
+heroku rename newname

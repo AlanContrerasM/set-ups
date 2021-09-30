@@ -33,3 +33,15 @@ https://guides.rubyonrails.org/getting_started.html
 on terminal also
 sudo apt-get install -y sqlite3 libsqlite3-dev
 then do your rails new projectname
+
+
+
+
+//heroku
+//install heroku
+//https://devcenter.heroku.com/articles/heroku-cli
+
+//after installing check 
+heroku --version
+//if it works
+heroku login
