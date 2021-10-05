@@ -29,12 +29,13 @@ npm install -g eslint
 
 //rails =>
 https://guides.rubyonrails.org/getting_started.html
-
+//get extension for ruby
 on terminal also
 sudo apt-get install -y sqlite3 libsqlite3-dev
 then do your rails new projectname
 
 
+//install extension simple react snippets
 
 
 //heroku

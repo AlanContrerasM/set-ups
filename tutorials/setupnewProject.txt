@@ -276,6 +276,11 @@ bundle install --without production
 //now run
 git push heroku main
 
+//if everything worked, you created a database but now you need to migrate it in heroku
+heroku run rails db:migrate
+
+
+//if you want you now can set up a domain in heroku settings
 //google heroku ruby on rails pg, you would find something like this with instructions, but probably not needed
 //https://devcenter.heroku.com/articles/getting-started-with-rails6
 
