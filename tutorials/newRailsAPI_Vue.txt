@@ -1,0 +1,100 @@
+// we are creating a new recordstore, json web token, jwt auth, database, simple record keeping app with rails api, and vue front end
+
+//run 
+rails new records-rails-back-api --api
+cd records-rails-back-api
+git remote add origin <repository>
+//do your commit and push 
+
+
+//uncomment redis,rack-cors and bcrypt on your gemfile
+gem 'redis', '~> 4.0'
+gem 'bcrypt', '~> 3.1.7'
+gem 'rack-cors'\
+//add jwt sessions
+gem 'jwt_sessions', '~> 2.7'
+//run bundle
+bundle install
+
+
+//create a model
+rails generate model User email password_digest
+//this creates a migration file, we need to edit, on db/migrate/  , specify the fields shouldnt be null
+t.string :email, null: false
+t.string :password_digest, null: false 
+//save and then run 
+rails db:migrate
+
+//on the user model on app/model/user file add has_secure_password like this:
+class User < ApplicationRecord
+    has_secure_password
+end
+
+        //TIP, just for practice if you ever wanna delete
+        //create a new scaffold for Artist name, run 
+        rails g scaffold Artist name
+        //to delete it
+        rails d scaffold Artist
+
+//create new scaffold for a new table that uses user
+rails g scaffold Artist name:string user:references
+rails db:migrate
+
+
+//create a record scaffold that belong to both user and Artist
+rails g scaffold Record title:string year:string artist:references user:references
+rails db:migrate
+
+
+//setup versioning
+//inside app/controllers/ create a new folder "api" and inside that one create "v1"
+//move the records and artists controllers to the v1 folder
+//now inside the artists and records, enclose both on modules like this.
+    module Api 
+        module v1
+            <all the code....>
+        end
+    end
+
+//on models, lets first do artist, add a has_many, and a validates, belongs to might have to delete, cause it makes no sense
+    class Artist < ApplicationRecord
+    belongs_to :user #might have to delete since tutorial didnt go this far, but works on record
+    has_many :records, dependent: :destroy
+    validates :name, presence: true
+    end
+
+//on models/record
+    class Record < ApplicationRecord
+    belongs_to :user 
+    belongs_to :artist #might delete to keep it simple
+
+    validates :title, :year, presence: true
+    end
+
+//on models/user
+    class User < ApplicationRecord
+        has_secure_password
+        has_many :records
+    end
+
+//now let's work on app/config/routes
+//edit the file so we add namespaces for api and v1
+//additional add a root for testing
+    Rails.application.routes.draw do
+
+    namespace :api do
+        namespace :v1 do
+        resources :records
+        resources :artists
+        end
+    end
+
+    root to: "home#index"
+    
+    end
+//for our root we need a home controller, on controllers folder 
+//create a home_controller.rb , and specify an index method
+    class HomeController < ActionController::API
+        def index
+        end
+    end
