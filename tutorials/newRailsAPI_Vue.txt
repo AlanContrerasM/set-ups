@@ -36,15 +36,23 @@ end
         //to delete it
         rails d scaffold Artist
 
-//create new scaffold for a new table that uses user
+//create new scaffold for a new table that uses user, probably good idea to skip the user:references, as seen in later steps
 rails g scaffold Artist name:string user:references
 rails db:migrate
 
+//on the db/migrate/ the artists file, delete de null: false, so it looks like this
+t.references :user, foreign_key: true
 
 //create a record scaffold that belong to both user and Artist
 rails g scaffold Record title:string year:string artist:references user:references
 rails db:migrate
 
+//create a new migration to make user optional on artist model
+rails g migration MakeArtistUserIdOptional
+//add on the new migration the following code
+def change
+    change_column_null(:artists, :user_id, true)
+end
 
 //setup versioning
 //inside app/controllers/ create a new folder "api" and inside that one create "v1"
@@ -58,7 +66,8 @@ rails db:migrate
 
 //on models, lets first do artist, add a has_many, and a validates, belongs to might have to delete, cause it makes no sense
     class Artist < ApplicationRecord
-    belongs_to :user #might have to delete since tutorial didnt go this far, but works on record
+    #belongs_to :user #might have to delete since tutorial didnt go this far, but works on record
+    belongs_to :user, optional: true
     has_many :records, dependent: :destroy
     validates :name, presence: true
     end
@@ -98,3 +107,190 @@ rails db:migrate
         def index
         end
     end
+
+
+//now lets start to do stuff for the jwt authentication
+
+//create a new file jwt_session.rb on config/intializers
+//add the following, note: if for production create a good key and algorithm as per mentioned on jwt-session documentation
+JWTSessions.encryption_key = 'secret'
+//on the same initializer folder open the cors.rb, uncomment the function and add stuff, make it look like this
+    Rails.application.config.middleware.insert_before 0, Rack::Cors do
+    allow do
+        origins 'http://localhost:8080'
+
+        resource '*',
+        headers: :any,
+        credentials: true
+        methods: [:get, :post, :put, :patch, :delete, :options, :head]
+    end
+    end
+
+
+
+//on app/controllers/ application_controller make it look like this
+    class ApplicationController < ActionController::API
+        include JWTSessions::RailsAuthorization
+        rescue_from JWTSessions::Errors:Unauthorized, with: :not_authorized
+
+        private
+            def current_user
+                @current_user ||= User.find(payload('user_id'))
+            end
+
+            def not_authorized
+                render json: {error: 'Not authorized'}, status :Unauthorized
+            end
+    end
+
+//create a controller for signup
+rails g controller signup create
+//eliminate the route created on config/routes
+get 'signup/create'
+
+//now on signupcontroller
+//add all these logic
+    class SignupController < ApplicationController
+    def create
+        user = User.new(user_params)
+
+        if user.save
+        payload = {user_id: user.id}
+        session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
+        tokens = session.login
+
+        response.set_cookie(JWTSessions.access_cookie, 
+                            value: tokens(:access),
+                            httponly: true,
+                            secure: Rails.env.production?)
+        
+        render json: {csrf: tokens[:csrf]}
+            
+        else
+            render json: {error: user.errors.full_messages.join(' ')}, status: :unprocessable_entity
+        
+
+        end
+
+
+    end
+
+    private
+        def user_params
+        params.permit(:email, :password, :password_confirmation)
+        end
+
+    end
+
+//create another controller for sign in, you can do the rails g controller signin etc. but then we have to remove the routes.
+//so lets just create a new signin_controller.rb on the controller folder
+class SigninController < ApplicationController
+    before_action  :authroize_access_request!, only: [:destroy]
+
+    def create
+        user = User.find_by(emailr: params[:email])
+
+        if user.authenticate(params[:password])
+            payload = {user_id: user.id}
+            session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
+            tokens = session.login
+            response.set_cookie(JWTSessions.access_cookie, 
+                                value: tokens(:access),
+                                httponly: true,
+                                secure: Rails.env.production?)
+
+            render json: { csrf: tokens[:csrf]}
+        else
+            not_authorized
+        end
+
+    end
+
+    def destroy
+        session = JWTSessions::Session.new(payload: payload)
+        session.flush_by_access_payload
+        render json :ok
+    end
+
+    private
+        def not_found
+            render json: { error: "Cannot find email/password combination" }, status: :not_found
+        end
+end
+
+
+//create another controller refresh_controller.rb, just create it on the controllers folder
+class SigninController < ApplicationController
+    before_action  :authroize_refresh_by_access_request!
+
+    def create
+        session = JWTSessions::Session.new(payload: claimless_payload, refresh_by_access_allowed: true)
+        tokens = session.refresh_by_access_allowed do
+            raise JWTSessions::Errors::Unauthorized, "Something not right here!"
+        end
+
+        response.set_cookie(JWTSessions.access_cookie, 
+                            value: tokens(:access),
+                            httponly: true,
+                            secure: Rails.env.production?)
+        
+        render json: {csrf: tokens[:csrf]}
+    end
+end
+
+//now we create our post routes on routes file
+
+post "refresh", controller: :refresh, action: :create
+post "signin", controller: :signin, action: :create
+post "signup", controller: :signup, action: :create
+delete "signin", controller: :signin, action: :destroy
+
+
+//on the records_controller , add before the existing before_action
+before_action :authroize_access_request!
+
+//on records_controller continue wmodifyng the index and create methods
+    def index
+        @records = current_user.record.all
+
+        render json: @records
+      end
+      def create
+        @record = current_user.records.build(record_params)
+
+        if @record.save
+          render json: @record, status: :created, location: @record
+        else
+          render json: @record.errors, status: :unprocessable_entity
+        end
+      end
+//also modify the methods at the end
+    def set_record
+        @record = current_user.records.find(params[:id])
+    end
+
+    # Only allow a list of trusted parameters through.
+    def record_params
+        params.require(:record).permit(:title, :year, :artist_id) #we deleted :user_id
+    end
+
+//on the artists controller add before the previous before_action
+before_action :authorize_access_request!, except: [:show, :index]
+
+//on the last method inside artistscontroller, artist_param delete user_id from required params
+params.require(:artist).permit(:name)
+//on the schema, also delete the null: false, from the artists schema
+
+
+//at this point we can test our server
+//add on the home controller index
+@artists = Artist.all
+render json:  @artists
+//start the server
+rails s
+
+//you should be getting an empty json response!!, nice it works
+//we can add data to our db
+//run
+rails c
+Artist.create!(name:"AC/DC")
