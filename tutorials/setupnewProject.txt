@@ -68,51 +68,6 @@ git subtree push --prefix dist origin gh-pages
 
 
 
------ 
-react
------
-//make sure you have the simple react snippets extesion install
-
-
-npx create-react-app myReact
-//we can add typescript functionality
-//npx create-react-app my-app --template typescript
-cd myReact 
-
-
-//we can also install stuff like
-npm i font-awesome
-
-npm start
-
-//create new folder inside src called components
-//add whatever with the extension .jsx
-//new folder for services etc. 
-
-//if using state for a lot of components and keys, its a good idea to install on the project folder
-npm install uniqid
-//import it
-import uniqid from "uniqid";
-//use it like this
-{text: '',
-id: uniqid()}
-
-//to deploy static single webpages to github pages, follow the following guide
-https://medium.com/@isharamalaviarachchi/how-to-deploy-your-react-app-into-github-pages-b2c96292b18e
-
-//setup useEffects, example, what we pass on the array, is stuff that will trigger the function again, and whats on return,
-//return is our cleanup after dismounting.
-useEffect(() => {   
-   const subscription = props.apiSubscription()   
-   
-   return () => {     
-    // clean up the subscription     
-    subscription.unsubscribeApi() 
-   }
-}, [props.apiSubscription])
-
-
-
 
 
 

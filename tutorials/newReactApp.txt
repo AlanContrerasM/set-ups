@@ -1,0 +1,178 @@
+----- 
+react
+-----
+//make sure you have the simple react snippets extesion installed on vscode, makes it faster to set some stuff.
+
+
+npx create-react-app myReact
+//we can add typescript functionality
+//npx create-react-app my-app --template typescript
+cd myReact 
+
+we can now 
+git remote add origin <link>
+
+// you want to enable bootstrap, go to the public floder and on index.html head add the cdn for css
+//before the closing body tag, add the js bootstrap bundle.
+//we can also install stuff like
+npm i font-awesome
+
+npm start
+
+
+//we can add router functionaliy by installing the react-router-dom
+npm i react-router-dom
+
+//create new folder inside src called components
+//add whatever with the extension .jsx
+//new folder for services etc. 
+
+
+
+//if using state for a lot of components and keys, its a good idea to install on the project folder
+npm install uniqid
+//import it
+import uniqid from "uniqid";
+//use it like this
+{text: '',
+id: uniqid()}
+
+//to deploy static single webpages to github pages, follow the following guide
+https://medium.com/@isharamalaviarachchi/how-to-deploy-your-react-app-into-github-pages-b2c96292b18e
+
+
+
+
+
+
+
+
+
+//work with api, using useEffect, conditional rendering
+
+//setup useEffects, example, what we pass on the array, is stuff that will trigger the function again, and whats on return,
+//return is our cleanup after dismounting.
+const [data, setData] = useState(null);
+const [isLoading, setIsLoading] = useState(true);
+const [error, setError] = useState(null);
+useEffect(() => {   
+   ion = props.apiSubscription()  
+
+   fetch('http://....')
+    .then(res=>{
+        //if is optional, cause we still get a standard error, but maybe you want a custom
+        if(!res.ok){
+            throw Error('Could not fetch data for that resource.')
+        }
+        return res.json()
+        
+        })
+    .then(data=>{
+        setData(data);
+        setIsLoading(false);
+        setError(null);
+        })
+    .catch((err)=>{
+        console.log(err.message);
+        setError(err.message);
+        setIsLoading(false);
+    })
+    //assuming we had a data state
+   
+   return () => {     
+    // clean up whatever, close db, logout, cancel subscription.
+   }
+}, [])
+
+
+//if we pass, an array dependency, even when empty, it only runs when the dependecies change, and not everytime.
+//so cool if you only want to run it when a certain dependency changes.
+//if we pass nothing then it runs every rerender, like useEffect(()=>{runs everytime});
+
+//when rendering everything make sure to make it inside a conditional so it only renders if data is not null
+return(
+    <div className="home">
+        {error && <div>{error}</div>}
+        {isLoading && <div>Loading...</div>}
+        {data && <Component data={data}>}
+    </div>
+)
+
+//out of all that code, we can create a custom hook, so we only need to service it in one place.
+//custom hooks starts with "use"
+//create a file in src. useFetch.js
+
+const useFetch = (url) =>{
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    useEffect(() => {   
+    ion = props.apiSubscription()  
+
+    fetch(url)
+        .then(res=>{
+            //if is optional, cause we still get a standard error, but maybe you want a custom
+            if(!res.ok){
+                throw Error('Could not fetch data for that resource.')
+            }
+            return res.json()
+            
+            })
+        .then(data=>{
+            setData(data);
+            setIsLoading(false);
+            setError(null);
+            })
+        .catch((err)=>{
+            console.log(err.message);
+            setError(err.message);
+            setIsLoading(false);
+        })
+        //assuming we had a data state
+    
+    return () => {     
+        // clean up whatever, close db, logout, cancel subscription.
+    }
+    }, [url])
+
+    return {data, isLoading, error};
+}
+
+export default useFetch;
+
+//now on your component, you use it like
+
+const Home = () =>{
+    //if we want to call the blog, we assign it like this
+    const {data: blog, isLoading, error} = useFetch('https:....')
+
+    return(
+        <div className="home">
+            {error && <div>{error}</div>}
+            {isLoading && <div>Loading...</div>}
+            {blog && blog.map...}>}
+        </div>
+    )
+}
+
+
+
+//to send json data through the handle submit on a form 
+const history = useHistory();
+const handleSubmit(blog){
+    fetch('https:...', {
+        method: 'POST',
+        headers: {"Content-type": "application/json'},
+        body: JSON.stringify(blog);
+    }).then(()=>{
+        console.log("new added");
+        setIsLoading(false);
+        //go backwards 
+        //history.go(-1);
+        history.push("/");
+    })
+}
+
+//we can set cool stuff on the form too
+{isLoading && <button disabled>Adding in process</button>}
+{!isLoading && <button>Add</button>}
