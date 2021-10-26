@@ -26,6 +26,8 @@ npm set init.author.name "Alan_Contreras"
 https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/linting
 npm install -g eslint
 
+//typescript
+npm i -g typescript
 
 //rails =>
 https://guides.rubyonrails.org/getting_started.html
