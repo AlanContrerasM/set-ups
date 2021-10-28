@@ -22,6 +22,8 @@ npm start
 
 //we can add router functionaliy by installing the react-router-dom
 npm i react-router-dom
+//query-string optional
+npm i query-string
 
 //create new folder inside src called components
 //add whatever with the extension .jsx
