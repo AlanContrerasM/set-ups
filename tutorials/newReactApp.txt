@@ -22,11 +22,13 @@ npm start
 
 //we can add router functionaliy by installing the react-router-dom
 npm i react-router-dom
+//template and examples on the react-demos project.
+
 //query-string optional
 npm i query-string
 
 //create new folder inside src called components
-//add whatever with the extension .jsx
+//add whatever with the extension .jsx. tsx for typescript
 //new folder for services etc. 
 
 

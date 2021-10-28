@@ -172,17 +172,17 @@ export interface Props{
     color?: string; //color is optional
 }
 
-const Header = (props: Props)=>{
+// const Header:FC<Props> = ()=>{
 
-    return(
-        ""//just so it doesnt throw error, ignore
-        // <Header>
-        //     <h1 style={color: props.color ? props.color : 'blue'}>{props.title}</h1>
-        // </Header>
-    );
+//     return(
+//         ""//just so it doesnt throw error, ignore
+//         // <Header>
+//         //     <h1 style={color: props.color ? props.color : 'blue'}>{props.title}</h1>
+//         // </Header>
+//     );
 
-}
+// }
 
-export default Header;
+// export default Header;
 
 //when you import it to the App.tsx, when you try to use the Header, it will tell you what it needs.
