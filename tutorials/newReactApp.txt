@@ -4,16 +4,26 @@ react
 //make sure you have the simple react snippets extesion installed on vscode, makes it faster to set some stuff.
 
 
-npx create-react-app myReact
+//npx create-react-app myReact
 //we can add typescript functionality
 //npx create-react-app my-app --template typescript
+npx create-react-app my-app --template redux-typescript
 cd myReact 
 
 we can now 
 git remote add origin <link>
 
+
+//IMPORTANT IF YOU WANT BOOTSTRAP
+
+
 // you want to enable bootstrap, go to the public floder and on index.html head add the cdn for css
 //before the closing body tag, add the js bootstrap bundle.
+
+
+
+
+
 //we can also install stuff like
 npm i font-awesome
 
@@ -35,6 +45,7 @@ npm i query-string
 
 //if using state for a lot of components and keys, its a good idea to install on the project folder
 npm install uniqid
+npm i -D @types/uniqid
 //import it
 import uniqid from "uniqid";
 //use it like this
@@ -45,7 +56,14 @@ id: uniqid()}
 https://medium.com/@isharamalaviarachchi/how-to-deploy-your-react-app-into-github-pages-b2c96292b18e
 
 
-
+//if you need to update dependencies
+npm update
+npm outdated
+//if you wish to upgrade to newer breaking dependencies
+ncu -u
+//node-check-updates or if ncu is not installed just run, this is the better option
+npx npm-check-updates -u
+npm install
 
 
 

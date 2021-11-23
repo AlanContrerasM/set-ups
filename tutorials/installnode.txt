@@ -29,6 +29,8 @@ npm install -g eslint
 //typescript
 npm i -g typescript
 
+
+
 //rails =>
 https://guides.rubyonrails.org/getting_started.html
 //get extension for ruby
@@ -37,8 +39,38 @@ sudo apt-get install -y sqlite3 libsqlite3-dev
 then do your rails new projectname
 
 
-//install extension simple react snippets
+//install extensions for es7 react snippets
 
+
+//postgresql install
+sudo apt install postgresql
+//create user 
+sudo -u postgres psql
+//now, maybe if you want change the password root to something else 
+ALTER USER postgres PASSWORD 'root';
+//to exit cli, \q
+psql -U postgres -h localhost
+//it will prompt for password, which we set to root
+// to see current databases 
+\l
+//to list users and roles they have
+\du 
+//to create new users 
+CREATE USER alan WITH SUPERUSER CREATEDB LOGIN ENCRYPTED PASSWORD 'admin';
+//now create new database for this user
+CREATE DATABASE alan;
+GRANT ALL PRIVILEGES ON DATABASE alan TO alan;
+//if you exit, \q to connect again 
+psql -U <postgres|alan> -h localhost
+//to drop a database
+DROP DATABASE <databasename>
+
+//install pgadmin
+//if first time adding it
+sudo curl https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo apt-key add
+sudo sh -c 'echo "deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
+sudo apt install pgadmin4
+///here you install both desktop and web version
 
 //heroku
 //install heroku
