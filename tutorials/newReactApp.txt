@@ -7,19 +7,23 @@ react
 //npx create-react-app myReact
 //we can add typescript functionality
 //npx create-react-app my-app --template typescript
-npx create-react-app my-app --template redux-typescript
+npx create-react-app our-block --template redux-typescript
 cd myReact 
 
 we can now 
 git remote add origin <link>
 
 
+npm i axios react-router-dom @material-ui/core @material-ui/icons @types/material-ui
+
 //IMPORTANT IF YOU WANT BOOTSTRAP
-
-
 // you want to enable bootstrap, go to the public floder and on index.html head add the cdn for css
 //before the closing body tag, add the js bootstrap bundle.
 
+
+//IMPORTANT FOR MATERIAL UI
+//add typography to index.html head
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
 
 
 
@@ -44,13 +48,15 @@ npm i query-string
 
 
 //if using state for a lot of components and keys, its a good idea to install on the project folder
-npm install uniqid
-npm i -D @types/uniqid
+npm install nanoid
+
 //import it
-import uniqid from "uniqid";
+import { nanoid } from 'nanoid'
 //use it like this
 {text: '',
-id: uniqid()}
+id: nanoid()}
+if inside async, 
+await nanoid()
 
 //to deploy static single webpages to github pages, follow the following guide
 https://medium.com/@isharamalaviarachchi/how-to-deploy-your-react-app-into-github-pages-b2c96292b18e

@@ -44,6 +44,7 @@ then do your rails new projectname
 
 //postgresql install
 sudo apt install postgresql
+//check which port you are in, this time we are on 5432
 //create user 
 sudo -u postgres psql
 //now, maybe if you want change the password root to something else 
@@ -71,6 +72,34 @@ sudo curl https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo apt-key
 sudo sh -c 'echo "deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
 sudo apt install pgadmin4
 ///here you install both desktop and web version
+//now yoiu should have the app pgadmin, for first time we set master password as admin
+//select add new server, name it whatever, on connection tab, on host name/address put localhost
+//continue putting the password for postgres, which was root
+
+//to get web mode, close the desktop
+//on terminal 
+sudo /usr/pgadmin4/bin/setup-web.sh
+//it will ask for email and pasword, use normal password t...5
+//say yes to prompts
+//open on web
+http://127.0.0.1/pgadmin4
+//once again add the server.
+
+//check the service
+sudo systemctl status postgresql
+sudo systemctl stop postgresql
+sudo systemctl start postgresql
+
+
+
+///mongodb
+install both mongodb community edition, and compass gui tool from the mongodb pages
+sudo systemctl status mongod
+start stop
+on compass just click connect, it automatically attaches to your local host.
+password set is my pin ...4
+
+
 
 //heroku
 //install heroku
@@ -80,3 +109,11 @@ sudo apt install pgadmin4
 heroku --version
 //if it works
 heroku login
+
+
+
+//python
+1. install python extension for vscode
+2. update your python version
+sudo apt-get update
+sudo apt-get install python3 python3-venv python3-pip
