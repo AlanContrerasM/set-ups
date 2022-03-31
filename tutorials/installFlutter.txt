@@ -1,0 +1,12 @@
+go to the internet and search the official doc of how to install flutter
+Follow along, right now the link is https://docs.flutter.dev/get-started/install/linux
+install flutter by snap, then install chrome, and install android studio
+android studio is easier by 
+sudo snap install android-studio --classic
+on sdk manager - sdk tools tab, select androdi sdk command line tools and install
+run flutter doctor
+everything should be ok
+
+in visual studio:
+enable extensions
+Error Lens, Flutter, Dart, Bloc
