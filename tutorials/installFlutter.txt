@@ -10,3 +10,5 @@ everything should be ok
 in visual studio:
 enable extensions
 Error Lens, Flutter, Dart, Bloc
+
+flutter create <appname>
